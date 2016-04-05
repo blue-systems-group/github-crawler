@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'react-mounter';
 
 import MainLayout from './components/main_layout';
-// import PostList from './containers/postlist';
+import SearchList from './containers/searchlist';
 // import Post from './containers/post';
 // import NewPost from './containers/newpost';
 
@@ -13,7 +13,7 @@ export default function (injectDeps, { FlowRouter }) {
     name: 'search.list',
     action() {
       mount(MainLayoutCtx, {
-        content: () => (<div>content</div>),
+        content: () => <SearchList />,
       });
     },
   });
