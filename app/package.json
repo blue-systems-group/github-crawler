@@ -11,11 +11,14 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "cls-bluebird": "^1.0.1",
+    "continuation-local-storage": "^3.1.6",
     "mantra-core": "^1.4.0",
     "meteor-node-stubs": "~0.2.0",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
-    "react-mounter": "^1.1.0"
+    "react-mounter": "^1.1.0",
+    "request-promise": "^2.0.1"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.4.0",
