@@ -18,8 +18,13 @@ class NewSearch extends Component {
     return (
       <div>
         {error ? <p style={{ color: 'red' }}>{error}</p> : null}
-        <input ref="input"></input>
-        <button onClick={this.newSearch}>New Search</button>
+        <div className="todoapp">
+          <h1>GitHub Code Search</h1>
+          <div className="search-form">
+            <input ref="input" className="new-search" placeholder="new GitHub search"></input>
+            <input type="button" className="button" onClick={this.newSearch} value="Search"></input>
+          </div>
+        </div>
       </div>
     );
   }
