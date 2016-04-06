@@ -3,6 +3,7 @@ import { mount } from 'react-mounter';
 
 import MainLayout from './components/main_layout';
 import SearchList from './containers/searchlist';
+import Search from './containers/search';
 // import Post from './containers/post';
 // import NewPost from './containers/newpost';
 
@@ -18,14 +19,14 @@ export default function (injectDeps, { FlowRouter }) {
     },
   });
 
-  // FlowRouter.route('/post/:postId', {
-  //   name: 'posts.single',
-  //   action({ postId }) {
-  //     mount(MainLayoutCtx, {
-  //       content: () => (<Post postId={postId} />)
-  //     });
-  //   }
-  // });
+  FlowRouter.route('/search/:searchId', {
+    name: 'searchs.single',
+    action({ searchId }) {
+      mount(MainLayoutCtx, {
+        content: () => (<Search {...{ searchId }} />),
+      });
+    },
+  });
   //
   // FlowRouter.route('/new-post', {
   //   name: 'newpost',

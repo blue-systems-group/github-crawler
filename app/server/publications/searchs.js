@@ -1,6 +1,6 @@
 import { Searchs } from '../../lib/collections';
 import { Meteor } from 'meteor/meteor';
-// import { check } from 'meteor/check';
+import { check } from 'meteor/check';
 
 export default () => {
   Meteor.publish('searchs.list', () => {
@@ -14,12 +14,13 @@ export default () => {
     return Searchs.find(selector, options);
   });
 
-  // Meteor.publish('posts.single', function (postId) {
-  //   check(postId, String);
-  //   const selector = {_id: postId};
-  //   return Posts.find(selector);
-  // });
-  //
+  Meteor.publish('searchs.single', (searchId) => {
+    check(searchId, String);
+    const selector = { _id: searchId };
+
+    return Searchs.find(selector);
+  });
+
   // Meteor.publish('posts.comments', function (postId) {
   //   check(postId, String);
   //   const selector = {postId};
