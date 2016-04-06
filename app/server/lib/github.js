@@ -30,6 +30,7 @@ const searchCode = ({ _id, query }, page = 1) => {
     headers: {
       Authorization: `token ${token}`,
       'User-Agent': 'maybe',
+      Accept: 'application/vnd.github.v3.text-match+json',
     },
     resolveWithFullResponse: true,
     json: true,
@@ -47,7 +48,10 @@ const searchCode = ({ _id, query }, page = 1) => {
     const { total_count: totalCount, items } = body;
     Searchs.update(
       _id,
-      { $push: { items: { $each: items } } }
+      {
+        $push: { items: { $each: items } },
+        $set: { totalCount },
+      }
     );
 
     if (totalCount <= page * PER_PAGE) {
