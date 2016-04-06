@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react';
 import NewSearch from '../containers/newsearch';
 
-const SearchItem = ({ _id, searching, query, totalCount, items = [] }) => (
+const SearchItem = ({ _id, searching, query, totalCount = 0, items = [] }) => (
   <tr>
     <td>
       <a href={`/search/${_id}`}>{query}</a>
       {searching ? (<div>Searching...</div>) : null}
     </td>
     <td>
-      {items.length && totalCount ?
-        (<div>
-          {items.length}/{totalCount}
-        </div>) : null}
+      {items.length}
+    </td>
+    <td>
+      {totalCount}
     </td>
   </tr>
 );
@@ -31,7 +31,8 @@ const SearchList = ({ searchs }) => (
       <thead>
         <tr>
           <th>Query</th>
-          <th>Results / Total Count</th>
+          <th>Results</th>
+          <th>Total</th>
         </tr>
       </thead>
       <tbody>

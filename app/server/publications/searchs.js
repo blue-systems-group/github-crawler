@@ -7,7 +7,7 @@ export default () => {
     const selector = {};
     const options = {
       fields: { _id: 1, query: 1, searching: 1, createdAt: 1, totalCount: 1, 'items.name': 1 },
-      sort: { createdAt: -1 },
+      // sort: { createdAt: -1 },
       // limit: 10,
     };
 
