@@ -10,7 +10,7 @@ export const composer = ({ context, searchId, clearErrors, delSearch }, onData) 
     if (search) {
       onData(null, { search, error, delSearch });
     } else {
-      onData(null, {});
+      onData(null, { error });
     }
   }
 

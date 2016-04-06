@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import moment from 'moment';
 import Item from './item';
 
 class Search extends Component {
@@ -16,9 +17,12 @@ class Search extends Component {
     if (!this.props.search) {
       return (<div>Not found!</div>);
     }
-    const { query, searching, createdAt, items = [], totalCount = 0} = this.props.search;
+    const { error } = this.props;
+    const { query, searching, createdAt, items = [], totalCount = 0 } = this.props.search;
+    const time = moment(createdAt);
     return (
       <div className="searchitem">
+        {error ? <p style={{ color: 'red' }}>{error}</p> : null}
         <div>
           {query}
         </div>
@@ -26,7 +30,7 @@ class Search extends Component {
         <div>
           {items.length}/{totalCount}
         </div>
-        <button onClick={this.del}>Delete</button>
+        {time.format('MM/DD/YYYY, HH:mm:ss')} <button onClick={this.del}>Delete</button>
         <div>
           {items.map((item, index) =>
             <Item key={item.html_url + index}
@@ -41,7 +45,8 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  search: PropTypes.object.isRequired,
+  search: PropTypes.object,
+  error: PropTypes.string,
   delSearch: PropTypes.func.isRequired,
 };
 
