@@ -3,15 +3,17 @@ import React, { PropTypes } from 'react';
 const Item = ({ index, path, score, html_url: url, text_matches, repository = {} }) => {
   const { html_url: repoUrl, full_name: repoName } = repository;
   return (
-    <div className="item">
-      <div>
-        {index + 1}: <a href={repoUrl} target="_blank">{repoName}</a> {score}
-      </div>
-      <a href={url} target="_blank">
-        {path}
-      </a>
-      <div>Matched times: {text_matches.length}</div>
-    </div>
+    <tr>
+      <td>{index + 1}</td>
+      <td>
+        <a href={repoUrl} target="_blank">{repoName}</a>
+      </td>
+      <td>{score}</td>
+      <td>
+        <a href={url} target="_blank">{path}</a>
+      </td>
+      <td>{text_matches.length}</td>
+    </tr>
   );
 };
 

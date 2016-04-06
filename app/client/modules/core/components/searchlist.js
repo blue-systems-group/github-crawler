@@ -2,14 +2,18 @@ import React, { PropTypes } from 'react';
 import NewSearch from '../containers/newsearch';
 
 const SearchItem = ({ _id, searching, query, totalCount, items = [] }) => (
-  <div>
-    <a href={`/search/${_id}`}>{query}</a>
-    {searching ? (<div>Searching...</div>) : null}
-    {items.length && totalCount ?
-      (<div>
-        {items.length}/{totalCount}
-      </div>) : null}
-  </div>
+  <tr>
+    <td>
+      <a href={`/search/${_id}`}>{query}</a>
+      {searching ? (<div>Searching...</div>) : null}
+    </td>
+    <td>
+      {items.length && totalCount ?
+        (<div>
+          {items.length}/{totalCount}
+        </div>) : null}
+    </td>
+  </tr>
 );
 
 SearchItem.propTypes = {
@@ -23,9 +27,19 @@ SearchItem.propTypes = {
 const SearchList = ({ searchs }) => (
   <div className="searchlist">
     <NewSearch />
-    {searchs.map(search => (
-      <SearchItem key={search._id} {...search} />
-    ))}
+    <table>
+      <thead>
+        <tr>
+          <th>Query</th>
+          <th>Results / Total Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {searchs.map(search => (
+          <SearchItem key={search._id} {...search} />
+        ))}
+      </tbody>
+    </table>
   </div>
 );
 

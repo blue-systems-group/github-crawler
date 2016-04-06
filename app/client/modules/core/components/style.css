@@ -6,7 +6,7 @@ body {
 header {
   border-bottom: 1px solid #EAEAEA;
   padding-bottom: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 footer {
@@ -14,11 +14,6 @@ footer {
   border-top: 1px solid #EAEAEA;
   padding-top: 10px;
   font-size: 12px;
-}
-
-.item {
-  border-bottom: 1px solid #EAEAEA;
-  padding-bottom: 10px;
 }
 
 .postlist li {
@@ -47,4 +42,26 @@ footer {
   margin-top: 20px;
   border-top: 1px solid #eee;
   padding-top: 5px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tr {
+  border: solid;
+  border-width: 1px 0;
+}
+
+td, th {
+  border: solid;
+  border-width: 1px;
+}
+
+td:first-child, th:first-child {
+  border-left: none;
+}
+
+td:last-child, th:last-child {
+  border-right: none;
 }

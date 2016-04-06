@@ -31,14 +31,25 @@ class Search extends Component {
           {items.length}/{totalCount}
         </div>
         {time.format('MM/DD/YYYY, HH:mm:ss')} <button onClick={this.del}>Delete</button>
-        <div>
-          {items.map((item, index) =>
-            <Item key={item.html_url + index}
-              {...item}
-              index={index}
-            />
-          )}
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Repository</th>
+              <th>Score</th>
+              <th>Path</th>
+              <th>Matched Times</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, index) =>
+              <Item key={item.html_url + index}
+                {...item}
+                index={index}
+              />
+            )}
+          </tbody>
+        </table>
       </div>
     );
   }
