@@ -2,9 +2,9 @@ import Search from '../components/search';
 import { useDeps, composeWithTracker, composeAll } from 'mantra-core';
 
 export const composer = ({ context, searchId }, onData) => {
-  const { Meteor, Collections: { Searchs } } = context();
+  const { Subs, Collections: { Searchs } } = context();
 
-  Meteor.subscribe('searchs.single', searchId);
+  Subs.subscribe('searchs.single', searchId);
 
   const search = Searchs.findOne(searchId);
 
