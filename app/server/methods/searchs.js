@@ -18,5 +18,13 @@ export default function () {
       Searchs.insert(search);
       gitHubSearch(search);
     },
+
+    'searchs.delete'(_id) {
+      check(_id, String);
+      if (!Searchs.findOne({ _id })) {
+        throw new Meteor.Error(404, `id ${_id} not found!`);
+      }
+      return Searchs.remove({ _id });
+    },
   });
 }

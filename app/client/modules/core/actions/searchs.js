@@ -1,4 +1,5 @@
 const NEW_SEARCH_ERROR = 'NEW_SEARCH_ERROR';
+const DEL_SEARCH_ERROR = 'DEL_SEARCH_ERROR';
 
 export default {
   create({ Meteor, LocalState }, query) {
@@ -16,7 +17,18 @@ export default {
     return LocalState.set(NEW_SEARCH_ERROR, null);
   },
 
+  delSearch({ Meteor, FlowRouter, LocalState }, id) {
+    Meteor.call('searchs.delete', id, (err) => {
+      if (err) {
+        LocalState.set(DEL_SEARCH_ERROR, err.message);
+      } else {
+        FlowRouter.go('/');
+      }
+    });
+  },
+
   clearErrors({ LocalState }) {
-    return LocalState.set(NEW_SEARCH_ERROR, null);
+    LocalState.set(NEW_SEARCH_ERROR, null);
+    LocalState.set(DEL_SEARCH_ERROR, null);
   },
 };
