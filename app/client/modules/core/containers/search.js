@@ -4,14 +4,11 @@ import { useDeps, composeWithTracker, composeAll } from 'mantra-core';
 export const composer = ({ context, searchId }, onData) => {
   const { Subs, Collections: { Searchs } } = context();
 
-  Subs.subscribe('searchs.single', searchId);
-
-  const search = Searchs.findOne(searchId);
-
-  if (search) {
-    onData(null, { search });
-  } else {
-    onData();
+  if (Subs.subscribe('searchs.single', searchId).ready()) {
+    const search = Searchs.findOne(searchId);
+    if (search) {
+      onData(null, { search });
+    }
   }
 };
 

@@ -17,8 +17,11 @@ export default () => {
   Meteor.publish('searchs.single', (searchId) => {
     check(searchId, String);
     const selector = { _id: searchId };
+    const options = {
+      fields: { _id: 1, query: 1, searching: 1, createdAt: 1, totalCount: 1, items: 1 },
+    };
 
-    return Searchs.find(selector);
+    return Searchs.find(selector, options);
   });
 
   // Meteor.publish('posts.comments', function (postId) {
