@@ -1,3 +1,4 @@
 import Searchs from './searchs';
+import { repoJobs } from './jobs';
 
-export { Searchs };
+export { Searchs, repoJobs };
