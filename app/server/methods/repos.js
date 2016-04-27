@@ -10,6 +10,18 @@ Meteor.testClone = () => {
   });
 };
 
+repoJobs.events.on('jobDone', message => {
+  const { params = [] } = message;
+  const [_id, runId] = params;
+  repoJobs.findOne({ _id, runId });
+});
+
+repoJobs.events.on('jobFail', message => {
+  const { params = [] } = message;
+  const [_id, runId] = params;
+  repoJobs.findOne({ _id, runId });
+});
+
 export default function () {
   Meteor.methods({
     'repos.add'(repo) {
@@ -20,7 +32,7 @@ export default function () {
       const job = new Job(repoJobs, 'clone', { ...repo });
       job.priority('normal')
       .retry({
-        retries: 5,
+        retries: 2,
         wait: 60 * 1000,
       })
       .save();
