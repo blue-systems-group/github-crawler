@@ -66,9 +66,12 @@ const searchCode = ({ _id, query }, page = 1) => {
     }
     return searchCode({ _id, query }, page + 1);
   }))
-  .catch((err) => {
+  .catch(() => {
     // TODO: handle first time reach limit
-    console.error(err);
+    // console.error(err);
+    Meteor.setTimeout(() => {
+      searchCode({ _id, query }, page);
+    }, 60 * 1000);
   });
 
   return _id;
