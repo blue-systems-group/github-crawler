@@ -47,7 +47,7 @@ const getQueue = (collectionName = 'repos', jobType = 'clone', basePath) => {
       payload: 1,
     },
     (job, callback) => {
-      console.log('Starting job:\n', job.doc.data, `\nrunning on ${job.doc.runId}`);
+      console.log(`\nStarting job: ${job.doc.data.name} ${job.doc.runId}`);
       const repo = job.doc.data;
 
       const cloneRepository = clone(repo, basePath);
@@ -59,10 +59,15 @@ const getQueue = (collectionName = 'repos', jobType = 'clone', basePath) => {
       })
       .catch(reason => {
         console.log('SKIP:', repo.name, reason);
-        job.fail({ reason: 'exist' }, { fatal: true }, (err, res) => {
-          console.log(err);
-          console.log(res);
-        });
+        job.fail(
+          { reason: 'exist' },
+          { fatal: true },
+          () => {}
+          // (err, res) => {
+          //   console.log(err);
+          //   console.log(res);
+          // }
+        );
         callback();
       });
     }

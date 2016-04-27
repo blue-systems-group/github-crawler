@@ -1,4 +1,4 @@
 import Searchs from './searchs';
-import { repoJobs } from './jobs';
+import { repoJobs, Repos, upsertRepo } from './jobs';
 
-export { Searchs, repoJobs };
+export { Searchs, repoJobs, Repos, upsertRepo };
