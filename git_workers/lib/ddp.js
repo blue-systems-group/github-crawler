@@ -40,7 +40,12 @@ const getQueue = (collectionName = 'repos', jobType = 'clone', basePath) => {
   const queue = Job.processJobs(
     collectionName,
     jobType,
-    { pollInterval: false, workTimeout: 60 * 1000 },
+    {
+      pollInterval: false,
+      workTimeout: 5 * 60 * 1000,
+      concurrency: 10,
+      payload: 1,
+    },
     (job, callback) => {
       console.log('Starting job:\n', job.doc.data, `\nrunning on ${job.doc.runId}`);
       const repo = job.doc.data;
@@ -48,11 +53,12 @@ const getQueue = (collectionName = 'repos', jobType = 'clone', basePath) => {
       const cloneRepository = clone(repo, basePath);
 
       cloneRepository.then((repository) => {
-        console.log('get', repository);
+        console.log('DONE:', repo.name, repository);
         job.done();
         callback();
       })
-      .catch(() => {
+      .catch(reason => {
+        console.log('SKIP:', repo.name, reason);
         job.fail({ reason: 'exist' }, { fatal: true }, (err, res) => {
           console.log(err);
           console.log(res);
@@ -69,14 +75,14 @@ const getObsrvable = (ddp, q, collectionName = 'repos.jobs') => {
 
   obs.added = (id) => {
     if (ddp.collections[collectionName][id].status === 'ready') {
-      console.log('Triggering queue, added');
+      // console.log('Triggering queue, added');
       q.trigger();
     }
   };
 
   obs.changed = (id, oldFields, clearedFields, newFields) => {
     if (newFields.status === 'ready') {
-      console.log('Triggering queue, changed');
+      // console.log('Triggering queue, changed');
       q.trigger();
     }
   };
