@@ -1,6 +1,7 @@
 import { initDDP } from './lib';
 import { join } from 'path';
 
-const basePath = join(__dirname, 'repos');
+const home = process.env.HOME;
+const basePath = join(home, 'repos');
 
 initDDP('localhost', 3000, basePath);
