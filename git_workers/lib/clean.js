@@ -2,8 +2,8 @@
 import { getDirSize } from './du';
 import { exec } from 'child_process';
 
-// 32 MB is large repo
-const LARGE_REPO_SIZE = 32 * 1024 * 1024;
+// 64 MB is large repo
+const LARGE_REPO_SIZE = 64 * 1024 * 1024;
 
 const cleanRepo = path => {
   console.log('clean repo:', path);
