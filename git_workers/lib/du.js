@@ -9,7 +9,7 @@ const getDirSize = path => new Promise((resolve, reject) => {
     while (dirs.length > 0) {
       const tmpDirs = [];
       for (const dir of dirs) {
-        const stats = fs.statSync(dir);
+        const stats = fs.lstatSync(dir);
         if (stats.isDirectory()) {
           const files = fs.readdirSync(dir);
           files.map(file => tmpDirs.push(join(dir, file)));
@@ -21,7 +21,7 @@ const getDirSize = path => new Promise((resolve, reject) => {
     }
     resolve(totalSize);
   } catch (e) {
-    console.err('error in getDirSize:', e);
+    console.error('error in getDirSize:', e);
     reject(e);
   }
 });
