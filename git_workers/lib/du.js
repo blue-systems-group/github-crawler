@@ -14,7 +14,7 @@ const getDirSize = path => new Promise((resolve, reject) => {
           const files = fs.readdirSync(dir);
           files.map(file => tmpDirs.push(join(dir, file)));
         } else {
-          totalSize += stats.blksize;
+          totalSize += Math.max(stats.blksize, stats.size);
         }
       }
       dirs = tmpDirs;

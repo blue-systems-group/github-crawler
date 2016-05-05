@@ -60,7 +60,7 @@ const getQueue = (collectionName = 'repos', jobType = 'clone', basePath) => {
       cloneRepository.then((repository) => {
         const repoPath = getPath(basePath, repo.name);
         isSmallRepo(repoPath).then(count => {
-          console.log('DONE:', repo.name, repository, count);
+          console.log('DONE:', repo.name, repository, `${count / 1024}KB`);
           job.done();
           callback();
         }).catch(error => {
