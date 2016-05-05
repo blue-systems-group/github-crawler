@@ -1,13 +1,25 @@
 import { Meteor } from 'meteor/meteor';
 import { repoJobs, Repos, Searchs } from '../../lib/collections';
 
+const FAIL = 'fail';
+const DONE = 'done';
+
 /* eslint-disable no-console */
 const updateStatus = ({ name, url }, status) => {
   console.log(`${status}: ${name}`);
   Repos.update(
     { name, url },
-    { $set: { status } }
+    { $set: status }
   );
+};
+
+const getReason = message => {
+  const { params = [] } = message;
+  const reasons = params.filter(ele => ele.reason);
+  if (reasons.length > 0) {
+    return { reason: reasons[0].reason };
+  }
+  return { reason: 'unknown' };
 };
 
 const getJob = message => {
@@ -43,11 +55,14 @@ export default () => {
 
   repoJobs.events.on('jobDone', message => {
     const job = getJob(message);
-    updateStatus(job.data, 'done');
+    updateStatus(job.data, { status: DONE });
   });
 
   repoJobs.events.on('jobFail', message => {
     const job = getJob(message);
-    updateStatus(job.data, 'fail');
+    const reason = getReason(message);
+    if (reason.reason !== 'exist') {
+      updateStatus(job.data, { status: FAIL, ...reason });
+    }
   });
 };

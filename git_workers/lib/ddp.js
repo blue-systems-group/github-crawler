@@ -2,6 +2,11 @@ import DDP from 'ddp';
 import Job from 'meteor-job';
 
 import { clone } from './clone';
+import { isSmallRepo, cleanRepo } from './clean';
+
+import { join } from 'path';
+
+const getPath = (basePath, repoPath) => join(basePath, repoPath);
 
 /* eslint-disable no-console */
 const handleSocket = (ddp, q, obs) => {
@@ -53,15 +58,32 @@ const getQueue = (collectionName = 'repos', jobType = 'clone', basePath) => {
       const cloneRepository = clone(repo, basePath);
 
       cloneRepository.then((repository) => {
-        console.log('DONE:', repo.name, repository);
-        job.done();
-        callback();
+        const repoPath = getPath(basePath, repo.name);
+        isSmallRepo(repoPath).then(count => {
+          console.log('DONE:', repo.name, repository, count);
+          job.done();
+          callback();
+        }).catch(error => {
+          console.log(error);
+          console.log('DONE, too large:', repo.name, repository, error);
+          cleanRepo(repoPath);
+          job.fail(
+            { reason: 'size limit' },
+            { fatal: true },
+            () => {}
+            // (err, res) => {
+            //   console.log(err);
+            //   console.log(res);
+            // }
+          );
+          callback();
+        });
       })
       .catch(reason => {
         console.log('SKIP:', repo.name, reason);
         job.fail(
           { reason: 'exist' },
-          { fatal: true },
+          { fatal: false },
           () => {}
           // (err, res) => {
           //   console.log(err);
