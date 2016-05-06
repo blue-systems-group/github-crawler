@@ -47,8 +47,8 @@ const getQueue = (collectionName = 'repos', jobType = 'clone', basePath) => {
     jobType,
     {
       pollInterval: false,
-      workTimeout: 5 * 60 * 1000,
-      concurrency: 10,
+      workTimeout: 10 * 60 * 1000,
+      concurrency: 1,
       payload: 1,
     },
     (job, callback) => {
